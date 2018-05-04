@@ -52,5 +52,10 @@ HAS LLEGADO A ""LISTAR.JSP"
 			 
 		</c:forEach>
 	</table>
+	<div id="contenedorBoton">
+		<input type="button" value="Insertar Registro" onclick="window.location.href='InsertaProducto.jsp'"/>
+		<br/> 
+		<a href="${linkActualizar}">Refrescar</a>
+	</div>
 </body>
 </html>
