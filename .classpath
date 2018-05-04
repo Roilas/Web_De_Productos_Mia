@@ -13,10 +13,20 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/Biblioteca 313/Desktop/librerias JAVA/javax.servlet.jsp.jstl-1.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Biblioteca 313/Desktop/librerias JAVA/javax.servlet.jsp.jstl-api-1.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Biblioteca 313/Desktop/librerias JAVA/mysql-connector-java-8.0.11.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Biblioteca 313/Desktop/librerias JAVA/postgresql-9.1-901-1.jdbc4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Biblioteca 313/Desktop/librerias JAVA/mysql-connector-java-5.1.35.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.servlet.jsp.jstl-1.2.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.servlet.jsp.jstl-api-1.2.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-5.1.35.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
