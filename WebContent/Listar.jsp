@@ -46,7 +46,7 @@ HAS LLEGADO A ""LISTAR.JSP"
 				<td>${prod.importado}</td>
 				<td>${prod.pOrig}</td>
 				
-<%-- 				<td><a href="${linkTemp}">Actualizar</a>&nbsp;<a href="${linkTempEliminar}">Eliminar</a></td>	--%>		
+		<td><a href="${linkTemp}">Actualizar</a>&nbsp;<a href="${linkTempEliminar}">Eliminar</a></td>
 							
 			</tr>
 			 

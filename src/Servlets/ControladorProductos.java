@@ -81,6 +81,28 @@ public class ControladorProductos extends HttpServlet {
 			default:
 				obtenerProductos(request, response);
 				break;
+
+			case "cargar":
+				cargaProductos(request, response);
+				break;
+
+			case "actualizarBBDD":
+				try {
+					actualizaProductos(request, response);
+				} catch (Exception e) {
+					System.out.println("EXCEPCIÓN al MODIFICAR: " + e.getMessage());
+					//obtenerProductosError(request, response, e.getMessage());
+				}
+				
+			case "eliminar":
+				try {
+					eliminarProductos(request, response);
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("EXCEPCIÓN al ELIMINAR: " + e.getMessage());
+					//obtenerProductosError(request, response, e.getMessage());				
+			}
+				break;
 			}
 
 		}
@@ -92,18 +114,7 @@ public class ControladorProductos extends HttpServlet {
 			// Pasamos el mensaje a String
 
 			System.out.println("EXCEPCIÓN: " + e.getMessage());
-			String MensajeError = e.getMessage();
 
-			// Si el error es campo vacio (Al añadir un producto) envia otra vez a añadir
-			// producto.
-
-			if (MensajeError == "emptyString") {
-				try {
-					agregarProductos(request, response);
-				} catch (Exception e2) {
-					System.out.println("EXCEPCIÓN: " + e2.getMessage());
-				}
-			}
 		}
 		// obtenerProductosError(request, response, e.getMessage());
 	}
@@ -121,6 +132,8 @@ public class ControladorProductos extends HttpServlet {
 		miDispatcher.forward(request, response);
 
 	}
+
+	/********************************************************************************************/
 
 	private void agregarProductos(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -140,6 +153,51 @@ public class ControladorProductos extends HttpServlet {
 		obtenerProductos(request, response);
 
 	}
+
+	/***************************************************************************/
+
+	private void eliminarProductos(HttpServletRequest request, HttpServletResponse response) throws Exception{
+
+		String codigoArticulo = request.getParameter("CArticulo");
+		MiModelo.EliminarProducto(codigoArticulo);
+		
+		obtenerProductos(request, response);	
+	}
+	
+	/*****************************************************************/
+	
+	
+	
+	private void cargaProductos(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		String codigoArticulo = request.getParameter("CArticulo");
+		Producto elProducto = MiModelo.ObtenUnProducto(codigoArticulo);
+		request.setAttribute("ProductoActualizar", elProducto);
+
+		RequestDispatcher miDispatcher = request.getRequestDispatcher("/ActualizarProducto.jsp");
+		miDispatcher.forward(request, response);
+	}
+
+	/********************************************************************/
+	
+private void actualizaProductos(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		
+		String CodArticulo = request.getParameter("CArt"); 
+		String Seccion = request.getParameter("seccion");
+		String NombreArticulo = request.getParameter("NArt");
+		String Fecha = request.getParameter("fecha");
+		double Precio = Double.parseDouble(request.getParameter("precio"));
+		String Importado = request.getParameter("importado");
+		String PaisOrigen = request.getParameter("POrig");
+		
+		Producto ProductoActualizado = new Producto(CodArticulo,Seccion, NombreArticulo, Precio, Fecha, Importado, PaisOrigen);
+		
+		MiModelo.actualizarProducto(ProductoActualizado);
+	
+		obtenerProductos(request, response);
+}
+		
+		/********************************************************************/
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
