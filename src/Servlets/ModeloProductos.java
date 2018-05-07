@@ -44,7 +44,7 @@ public class ModeloProductos {
 			Statement MiDeclaracion = miConexion.createStatement();
 			ResultSet miResultSet = MiDeclaracion.executeQuery(ComandoIntroducido);
 			
-			// Aqui creamos variables de texto que recogen la info de la tabla
+		
 			
 			while (miResultSet.next()) {
 				String cArt = miResultSet.getString("CODIGOARTICULO");
@@ -114,6 +114,9 @@ public class ModeloProductos {
 		}
 
 	}
+	
+	
+	
 	
 	
 	

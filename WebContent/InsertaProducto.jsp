@@ -40,8 +40,12 @@
 			<td>
 				<label for="fecha">Fecha</label>
 			</td>
+			
 			<td>
 				<input type="text" name="fecha" id="fecha"/>
+			</td>
+			<td>
+				 ------> Por favor, Introduczca el formato aaaa-mm-dd.
 			</td>
 		</tr>
 		<tr>

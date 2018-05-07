@@ -49,38 +49,97 @@ public class ControladorProductos extends HttpServlet {
 		} catch (Exception e) {
 			System.out.println("Excepcion: " + e.getMessage());
 		}
-		
-		
-		
-		
+
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		
+
+		String elComando = request.getParameter("instruccion");
+
+		System.out.println("elComando: " + elComando);
+
+		if (elComando == null)
+			elComando = "listar";
+
+		/*******************************************************************/
+
+		// Eleccion segun comando
+
+		/*****************************************************************/
 		try {
-		System.out.println("Importando datos de la base");
-		
-		// Aqui creamos una lista llamada "ProductosDisponibles" en la que cogemos todos los de la base
-		
-		List<Producto> ProductosDisponibles = MiModelo.ObtenProductosDeLaBase();
-		
-		// Estas tres lineas pasan dicha lista a la clase "ListarProductos.jsp"
-		
-		request.setAttribute("LISTAPRODUCTOS", ProductosDisponibles);
-	RequestDispatcher miDispatcher = request.getRequestDispatcher("/Listar.jsp");
-	miDispatcher.forward(request, response);
-		
+			switch (elComando) {
+
+			case "listar":
+				obtenerProductos(request, response);
+				break;
+
+			case "insertarBBDD":
+				agregarProductos(request, response);
+				break;
+
+			default:
+				obtenerProductos(request, response);
+				break;
+			}
+
 		}
+
+		// Gestion de errores en las ordenes
+
 		catch (Exception e) {
-			System.out.println("Excepcion: " + e.getMessage());
+
+			// Pasamos el mensaje a String
+
+			System.out.println("EXCEPCIÓN: " + e.getMessage());
+			String MensajeError = e.getMessage();
+
+			// Si el error es campo vacio (Al añadir un producto) envia otra vez a añadir
+			// producto.
+
+			if (MensajeError == "emptyString") {
+				try {
+					agregarProductos(request, response);
+				} catch (Exception e2) {
+					System.out.println("EXCEPCIÓN: " + e2.getMessage());
+				}
+			}
 		}
+		// obtenerProductosError(request, response, e.getMessage());
 	}
-		
-		
-		
-		
+
+	/************************************************************************/
+
+	private void obtenerProductos(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		List<Producto> ProductosDisponibles = MiModelo.ObtenProductosDeLaBase();
+		request.setAttribute("LISTAPRODUCTOS", ProductosDisponibles);
+		request.setAttribute("excepcion", null);
+		RequestDispatcher miDispatcher = request.getRequestDispatcher("/Listar.jsp");
+		// RequestDispatcher miDispatcher =
+		// request.getRequestDispatcher("/ListaProductos2.jsp");
+		miDispatcher.forward(request, response);
+
+	}
+
+	private void agregarProductos(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		String CodArticulo = request.getParameter("CArt");
+		String Seccion = request.getParameter("seccion");
+		String NombreArticulo = request.getParameter("NArt");
+		String Fecha = request.getParameter("fecha");
+		double Precio = Double.parseDouble(request.getParameter("precio"));
+		String Importado = request.getParameter("importado");
+		String PaisOrigen = request.getParameter("POrig");
+
+		Producto NuevoProducto = new Producto(CodArticulo, Seccion, NombreArticulo, Precio, Fecha, Importado,
+				PaisOrigen);
+
+		MiModelo.agregarElNuevoProducto(NuevoProducto);
+
+		obtenerProductos(request, response);
+
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
